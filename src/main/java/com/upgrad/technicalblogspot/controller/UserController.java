@@ -1,16 +1,26 @@
 package com.upgrad.technicalblogspot.controller;
 
 
+import com.upgrad.technicalblogspot.model.Post;
 import com.upgrad.technicalblogspot.model.user;
+import com.upgrad.technicalblogspot.service.PostService;
 import com.upgrad.technicalblogspot.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 @Controller
 public class UserController {
-    private UserService userService=new UserService();
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private PostService postservice;
+
     @RequestMapping("users/login")
     public String login(Model model){
         model.addAttribute("user", new user());
@@ -18,7 +28,8 @@ public class UserController {
     }
     @RequestMapping(value="users/login",method= RequestMethod.POST)
     public String loginUser(user user){
-        System.out.println("helloooooooo");
+        System.out.println(user.getUsername());
+        System.out.println(user.getPassword());
         if(userService.login(user)){
             return "redirect:/posts";
         }else{
@@ -31,6 +42,14 @@ public class UserController {
     }
     @RequestMapping(value="users/registration",method=RequestMethod.POST)
     public String registrationUser(user user){
+        System.out.println(user.getFullName());
+        System.out.println(user.getUsername());
+        System.out.println(user.getPassword());
         return "redirect:/users/login";
+    }
+    public String logout(Model model){
+        List<Post> post= postservice.getAllPosts();
+        model.addAttribute("posts",post);
+        return "redirect:index";
     }
 }
