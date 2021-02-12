@@ -41,15 +41,14 @@ public class UserController {
         return "users/registration";
     }
     @RequestMapping(value="users/registration",method=RequestMethod.POST)
-    public String registrationUser(user user){
+    public String registerUser(user user){
         System.out.println(user.getFullName());
         System.out.println(user.getUsername());
         System.out.println(user.getPassword());
         return "redirect:/users/login";
     }
-    public String logout(Model model){
-        List<Post> post= postservice.getAllPosts();
-        model.addAttribute("posts",post);
-        return "redirect:index";
+    @RequestMapping(value="users/logout",method=RequestMethod.POST)
+    public String logout(){
+        return "index";
     }
 }
