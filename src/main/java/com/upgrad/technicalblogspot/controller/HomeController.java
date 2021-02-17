@@ -3,14 +3,16 @@ package com.upgrad.technicalblogspot.controller;
 import com.upgrad.technicalblogspot.model.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Date;
-@Controller
+@RestController
 public class HomeController {
-    @RequestMapping("/")
-    public String getAllPosts(Model model){
+    @RequestMapping("/api/getposts")
+    public ArrayList<Post> getAllPosts(){
         ArrayList<Post> posts=new ArrayList<>();
 
         Post post1=new Post();
@@ -32,7 +34,14 @@ public class HomeController {
         posts.add(post2);
         posts.add(post3);
 
-        model.addAttribute("posts",posts);
-        return "index";
+        return posts;
+    }
+    @RequestMapping("/api/getposts/{user1}")
+    public Post getPostByUserName(@PathVariable(value = "user1") String user){
+        Post post1=new Post();
+        post1.setTitle("Mirzapur");
+        post1.setBody("Kalin Bhai ki sarkar");
+        post1.setDate(new Date());
+        return post1;
     }
 }
