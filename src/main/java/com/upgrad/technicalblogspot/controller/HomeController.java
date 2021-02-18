@@ -10,6 +10,7 @@ import java.util.Date;
 @Controller
 public class HomeController {
     @RequestMapping("/")
+    //just a random comment for this line
     public String getAllPosts(Model model){
         ArrayList<Post> posts=new ArrayList<>();
 
